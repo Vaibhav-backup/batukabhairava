@@ -4,8 +4,7 @@ import { StorySection } from './components/StorySection';
 import { Namavali } from './components/Namavali';
 import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather } from 'lucide-react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
-// Using direct URL to prevent build resolution errors for non-installed packages
-import { ReactLenis } from 'https://esm.sh/lenis@1.1.20/react';
+import { ReactLenis } from 'react-lenis';
 
 function App() {
   const [unlockedIndex, setUnlockedIndex] = useState(0);
@@ -26,7 +25,6 @@ function App() {
   const lightIntensity = (unlockedIndex / (storyData.length - 1)) * 100;
 
   useEffect(() => {
-    // Scroll to the start of the newly revealed section
     if (unlockedIndex > 0 && sectionRefs.current[unlockedIndex]) {
       setTimeout(() => {
         sectionRefs.current[unlockedIndex]?.scrollIntoView({ behavior: 'smooth' });
@@ -49,7 +47,7 @@ function App() {
   };
 
   return (
-    <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
+    <ReactLenis root options={{ lerp: 0.1, duration: 1.2 }}>
       <div className={`min-h-screen bg-bhai-dark text-slate-100 overflow-x-hidden transition-colors duration-[3000ms] selection:bg-bhai-gold/20 selection:text-bhai-gold`} 
            style={{ backgroundColor: `rgb(${15 + (lightIntensity * 0.1)}, ${23 + (lightIntensity * 0.05)}, ${42 + (lightIntensity * 0.02)})` }}>
         
