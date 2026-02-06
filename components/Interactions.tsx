@@ -19,22 +19,8 @@ const playTempleBell = () => {
 
 export const Interaction: React.FC<InteractionProps> = ({ type, onComplete, isCompleted }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const dragX = useMotionValue(0);
 
-  if (type === InteractionType.NONE) return null;
-
-  if (isCompleted) {
-    return (
-      <motion.div 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 0.5 }} 
-        className="flex flex-col items-center justify-center py-8"
-      >
-        <div className="text-bhai-gold text-xs uppercase tracking-[0.5em] mb-4">Ritual Sanctified</div>
-        <div className="w-px h-12 bg-gradient-to-b from-bhai-gold/50 to-transparent"></div>
-      </motion.div>
-    );
-  }
+  if (type === InteractionType.NONE || isCompleted) return null;
 
   const handleComplete = () => {
     if (type === InteractionType.RING_BELL) {
@@ -101,20 +87,6 @@ export const Interaction: React.FC<InteractionProps> = ({ type, onComplete, isCo
                 <p className="text-[9px] uppercase tracking-tighter mt-2 text-pink-300">Drag Upward</p>
               </motion.div>
             </div>
-          </div>
-        );
-      case InteractionType.READ_MORE:
-        return (
-          <div className="text-center group">
-            <button
-              onClick={handleComplete}
-              className="group flex flex-col items-center space-y-4 mx-auto"
-            >
-              <span className="text-xs md:text-sm uppercase tracking-[0.4em] text-white/50 group-hover:text-bhai-gold transition-colors">Descend Deeper</span>
-              <div className="p-3 md:p-4 rounded-full border border-white/10 group-hover:border-bhai-gold group-hover:scale-110 transition-all">
-                <ChevronDown className="w-5 h-5 md:w-6 md:h-6 text-white/30 group-hover:text-bhai-gold animate-bounce" />
-              </div>
-            </button>
           </div>
         );
       case InteractionType.APPLY_TILAK:

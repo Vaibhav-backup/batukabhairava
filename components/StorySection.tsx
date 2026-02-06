@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StorySegment } from '../types';
 import { Interaction } from './Interactions';
@@ -20,12 +20,12 @@ const icons: Record<string, React.ReactNode> = {
   Heart: <Heart className="w-6 h-6 md:w-8 md:h-8 text-pink-500" />
 };
 
-export const StorySection: React.FC<StorySectionProps> = ({
+export const StorySection = forwardRef<HTMLElement, StorySectionProps>(({
   segment,
   isVisible,
   onInteractionComplete,
   isInteractionCompleted
-}) => {
+}, ref) => {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
   if (!isVisible) return null;
@@ -84,10 +84,10 @@ export const StorySection: React.FC<StorySectionProps> = ({
 
   return (
     <motion.section
+      ref={ref}
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: "-10%" }}
-      className="relative w-full py-16 md:py-24 mb-6 border-l border-white/5 pl-6 md:pl-12"
+      animate={{ opacity: 1 }}
+      className="relative w-full py-16 md:py-24 mb-6 border-l border-white/5 pl-6 md:pl-12 scroll-mt-24"
     >
       <motion.div 
         initial={{ height: 0 }}
@@ -132,4 +132,4 @@ export const StorySection: React.FC<StorySectionProps> = ({
       </div>
     </motion.section>
   );
-};
+});

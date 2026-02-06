@@ -57,7 +57,7 @@ export const storyData: StorySegment[] = [
       "Batuka did not speak. He merely smiled. For him, this was not a war; it was 'Leela'—divine play. Aapad hurled a mountain; Batuka caught it like a ball. Aapad unleashed storms of fire; Batuka blew them out like a candle.",
       "The demon's amusement turned to terror. Batuka Bhairava grew in presence, his aura filling the sky. With a playful yet decisive movement, he raised his trident and pierced the demon's heart. Aapad dissolved not into blood, but into light, liberated by the touch of the Lord."
     ],
-    interactionRequired: InteractionType.READ_MORE,
+    interactionRequired: InteractionType.NONE,
     glossary: [
       { term: "Leela", definition: "Divine play or sport; the concept that creation and destruction are effortless acts of the divine." },
       { term: "Vedas", definition: "The most ancient Hindu scriptures, here represented by the dog following Bhairava." }
@@ -86,6 +86,6 @@ export const storyData: StorySegment[] = [
       "Batuka Bhairava teaches us that the Divine is not just a distant force, but a playful, protective presence waiting for us to simply call out his name.",
       "**Om Vatuka Bhairavaya Namaha**"
     ],
-    interactionRequired: InteractionType.NONE
+    interactionRequired: InteractionType.APPLY_TILAK
   }
 ];
