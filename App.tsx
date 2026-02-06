@@ -4,7 +4,6 @@ import { StorySection } from './components/StorySection';
 import { Namavali } from './components/Namavali';
 import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather } from 'lucide-react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
-import { ReactLenis } from 'react-lenis';
 
 function App() {
   const [unlockedIndex, setUnlockedIndex] = useState(0);
@@ -48,8 +47,7 @@ function App() {
   };
 
   return (
-    <ReactLenis root>
-      <div className={`min-h-screen bg-bhai-dark text-slate-100 overflow-x-hidden transition-colors duration-[3000ms] selection:bg-bhai-gold/20 selection:text-bhai-gold`} 
+    <div className={`min-h-screen bg-bhai-dark text-slate-100 overflow-x-hidden transition-colors duration-[3000ms] selection:bg-bhai-gold/20 selection:text-bhai-gold`} 
            style={{ backgroundColor: `rgb(${15 + (lightIntensity * 0.1)}, ${23 + (lightIntensity * 0.05)}, ${42 + (lightIntensity * 0.02)})` }}>
         
         <AnimatePresence>
@@ -248,7 +246,6 @@ function App() {
           ::-webkit-scrollbar { display: none; }
         `}} />
       </div>
-    </ReactLenis>
   );
 }
 
