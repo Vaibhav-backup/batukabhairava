@@ -1,20 +1,44 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { storyData } from './storyData';
 import { StorySection } from './components/StorySection';
-import { ArrowUp, Sparkles } from 'lucide-react';
+import { Namavali } from './components/Namavali';
+import { ArrowUp, Sparkles, ScrollText, ShieldCheck, Eye, EyeOff, MapPin, Feather } from 'lucide-react';
+import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 
 function App() {
   const [unlockedIndex, setUnlockedIndex] = useState(0);
+  const [showNamavali, setShowNamavali] = useState(false);
+  const [isFocusMode, setIsFocusMode] = useState(false);
+  const [sankalpa, setSankalpa] = useState('');
+  const [isSankalpaModalOpen, setIsSankalpaModalOpen] = useState(true);
+  const [hasSetSankalpa, setHasSetSankalpa] = useState(false);
+  
   const bottomRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-  // Auto-scroll when new section is unlocked
+  const lightIntensity = (unlockedIndex / (storyData.length - 1)) * 100;
+
   useEffect(() => {
-    if (unlockedIndex > 0 && bottomRef.current) {
+    if (unlockedIndex > 0 && bottomRef.current && !showNamavali) {
       setTimeout(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 300);
+      }, 500);
     }
-  }, [unlockedIndex]);
+  }, [unlockedIndex, showNamavali]);
+
+  const handleSankalpaSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (sankalpa.trim()) {
+      setHasSetSankalpa(true);
+      setIsSankalpaModalOpen(false);
+    }
+  };
 
   const handleInteractionComplete = (index: number) => {
     if (index === unlockedIndex && index < storyData.length - 1) {
@@ -23,34 +47,182 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-bhai-dark bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-bhai-dark to-black text-slate-100 overflow-x-hidden selection:bg-bhai-orange selection:text-white">
+    <div className={`min-h-screen bg-bhai-dark text-slate-100 overflow-x-hidden transition-colors duration-[3000ms] selection:bg-bhai-gold/20 selection:text-bhai-gold`} 
+         style={{ backgroundColor: `rgb(${15 + (lightIntensity * 0.1)}, ${23 + (lightIntensity * 0.05)}, ${42 + (lightIntensity * 0.02)})` }}>
       
-      {/* Ambient Background Particles (Simplified) */}
-      <div className="fixed inset-0 pointer-events-none opacity-20 z-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+      <AnimatePresence>
+        {isSankalpaModalOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-6 bg-black/90 backdrop-blur-3xl"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="max-w-md w-full bg-slate-900/50 border border-bhai-gold/20 p-6 md:p-10 rounded-[2.5rem] text-center shadow-2xl relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-bhai-gold to-transparent"></div>
+              <Feather className="w-10 h-10 md:w-12 md:h-12 text-bhai-gold mx-auto mb-6 opacity-80" />
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-white mb-4">Set Your Sankalpa</h2>
+              <p className="text-slate-400 text-xs md:text-sm mb-8 leading-relaxed font-serif italic px-2">
+                "An intention set with a pure heart is the first step toward the Divine. What is the one obstacle you wish the Lord to remove today?"
+              </p>
+              <form onSubmit={handleSankalpaSubmit} className="space-y-4">
+                <input 
+                  type="text" 
+                  value={sankalpa}
+                  onChange={(e) => setSankalpa(e.target.value)}
+                  placeholder="Type your intention..."
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-4 text-white focus:outline-none focus:border-bhai-gold transition-colors text-center italic font-serif text-lg md:text-xl"
+                  autoFocus
+                />
+                <button 
+                  type="submit"
+                  className="w-full py-4 bg-bhai-gold text-bhai-dark font-black rounded-2xl hover:bg-white transition-all transform active:scale-95 shadow-lg shadow-bhai-gold/20 text-sm uppercase tracking-widest"
+                >
+                  Enter the Presence
+                </button>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div 
+          className="absolute inset-0 transition-opacity duration-[3000ms]"
+          style={{ 
+            background: `radial-gradient(circle at 50% 50%, rgba(251, 191, 36, ${lightIntensity * 0.0015}) 0%, transparent 70%)`,
+            opacity: lightIntensity > 10 ? 1 : 0
+          }}
+        />
+        <div className="absolute inset-0 opacity-20 mix-blend-screen bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+        <motion.div 
+          animate={{ opacity: [0.05, 0.1, 0.05], x: [-20, 20, -20] }}
+          transition={{ duration: 10, repeat: Infinity }}
+          className="absolute bottom-0 w-full h-[60vh] bg-gradient-to-t from-bhai-gold/10 to-transparent blur-3xl"
+        />
       </div>
 
-      {/* Header/Hero */}
-      <header className="relative z-10 min-h-[60vh] flex flex-col items-center justify-center text-center px-4 pt-20 pb-10">
-        <div className="animate-pulse-slow mb-6">
-          <Sparkles className="w-16 h-16 text-bhai-gold opacity-80" />
+      {!isFocusMode && (
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-bhai-gold origin-left z-[60] shadow-[0_0_15px_#fbbf24]"
+          style={{ scaleX }}
+        />
+      )}
+
+      <div className={`fixed bottom-6 right-4 md:bottom-8 md:right-8 z-[70] flex flex-col space-y-3 md:space-y-4 transition-opacity duration-500 ${isFocusMode ? 'opacity-20 hover:opacity-100' : 'opacity-100'}`}>
+        <button 
+          onClick={() => setIsFocusMode(!isFocusMode)}
+          className="p-3 md:p-4 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-full text-white/70 hover:text-bhai-gold transition-all shadow-2xl"
+        >
+          {isFocusMode ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+        </button>
+        
+        <AnimatePresence>
+          {unlockedIndex > 0 && !isFocusMode && (
+            <motion.button 
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="p-3 md:p-4 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-full text-white/70 hover:text-bhai-gold transition-all shadow-2xl"
+            >
+              <ArrowUp className="w-5 h-5" />
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {!isFocusMode && (
+        <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40 flex flex-col space-y-2">
+          <motion.button
+            initial={{ x: -40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            whileHover={{ x: 8 }}
+            onClick={() => setShowNamavali(true)}
+            className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-gold/20 border-l-0 p-3 md:p-4 pr-4 md:pr-6 rounded-r-3xl shadow-2xl group transition-all"
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <ScrollText className="w-5 h-5 md:w-6 md:h-6 text-bhai-gold group-hover:scale-125 transition-transform" />
+              <span className="[writing-mode:vertical-lr] text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-bhai-gold font-bold">
+                Namavali
+              </span>
+            </div>
+          </motion.button>
+
+          <motion.button
+            initial={{ x: -40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            whileHover={{ x: 8 }}
+            onClick={() => window.open('https://www.google.com/maps/search/Batuka+Bhairava+Temple+Varanasi', '_blank')}
+            className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-red/20 border-l-0 p-3 md:p-4 pr-4 md:pr-6 rounded-r-3xl shadow-2xl group transition-all"
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <MapPin className="w-5 h-5 md:w-6 md:h-6 text-bhai-red group-hover:animate-bounce" />
+              <span className="[writing-mode:vertical-lr] text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-bhai-red font-bold">
+                Temple
+              </span>
+            </div>
+          </motion.button>
         </div>
-        <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-4 tracking-tight drop-shadow-2xl">
-          Batuka <span className="text-bhai-gold">Bhairava</span>
-        </h1>
-        <p className="text-xl md:text-2xl text-slate-400 font-light max-w-2xl mx-auto mb-8">
-          The Child. The Warrior. The Guardian.
-        </p>
-        <div className="w-24 h-1 bg-gradient-to-r from-transparent via-bhai-orange to-transparent opacity-50"></div>
-        <p className="mt-8 text-sm text-slate-500 uppercase tracking-widest">
-          A Devotional Journey
-        </p>
+      )}
+
+      <AnimatePresence>
+        {showNamavali && <Namavali onClose={() => setShowNamavali(false)} />}
+      </AnimatePresence>
+
+      <header className={`relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 transition-all duration-1000 ${isFocusMode ? 'blur-sm opacity-20 scale-95' : 'blur-0 opacity-100 scale-100'}`}>
+        <motion.div className="relative mb-12 md:mb-16">
+          <div className="absolute inset-0 bg-bhai-gold/30 rounded-full blur-[60px] md:blur-[80px] animate-pulse"></div>
+          <div className="relative z-10 w-48 h-48 md:w-80 md:h-80 rounded-full p-1 md:p-1.5 bg-gradient-to-tr from-bhai-orange via-bhai-gold to-bhai-red shadow-[0_0_50px_rgba(251,191,36,0.3)]">
+            <div className="w-full h-full rounded-full overflow-hidden border-[4px] md:border-[6px] border-bhai-dark">
+              <img 
+                src="https://res.cloudinary.com/dn6sk8mqh/image/upload/v1770310739/batuka-bhairava-jayanti-understanding-the-young-bhairava-v0-uglb8gxys25f1_oqkuih.jpg" 
+                alt="Batuka Bhairava" 
+                className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000"
+              />
+            </div>
+          </div>
+          <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -top-4 -right-4 md:-top-6 md:-right-6">
+             <Sparkles className="w-10 h-10 text-bhai-gold" />
+          </motion.div>
+        </motion.div>
+
+        <motion.h1 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="text-4xl md:text-7xl lg:text-9xl font-serif font-bold text-white mb-6 md:mb-8 tracking-tighter leading-tight"
+        >
+          Batuka <span className="text-bhai-gold italic">Bhairava</span>
+        </motion.h1>
+        
+        <motion.div className="flex items-center justify-center space-x-4 md:space-x-6 mb-12 md:mb-16">
+          <div className="w-12 md:w-24 h-[1px] bg-gradient-to-r from-transparent to-bhai-gold"></div>
+          <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-bhai-gold" />
+          <div className="w-12 md:w-24 h-[1px] bg-gradient-to-l from-transparent to-bhai-gold"></div>
+        </motion.div>
+
+        {hasSetSankalpa && (
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }} 
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-10 md:mb-12"
+          >
+            <p className="text-slate-500 text-[8px] md:text-[10px] uppercase tracking-[0.6em] mb-2">Current Sankalpa</p>
+            <p className="text-bhai-gold text-xl md:text-2xl font-serif italic max-w-sm md:max-w-xl">"{sankalpa}"</p>
+          </motion.div>
+        )}
+
+        <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }} className="text-slate-500">
+          <p className="text-[10px] md:text-xs uppercase tracking-[0.5em] mb-4">Scroll to Begin</p>
+          <div className="w-px h-12 md:h-16 bg-gradient-to-b from-bhai-gold to-transparent mx-auto"></div>
+        </motion.div>
       </header>
 
-      {/* Main Story Container */}
-      <main className="relative z-10 max-w-4xl mx-auto pb-40">
-        
-        {/* Render sections up to the unlocked index */}
+      <main className={`relative z-10 max-w-full mx-auto pb-40 px-4 md:px-8 transition-all duration-1000 ${isFocusMode ? 'md:max-w-3xl' : 'md:max-w-5xl'}`}>
         {storyData.map((segment, index) => (
           <StorySection
             key={segment.id}
@@ -61,36 +233,30 @@ function App() {
           />
         ))}
 
-        <div ref={bottomRef} className="h-2" />
+        <div ref={bottomRef} className="h-4" />
         
-        {/* Footer / End of content marker */}
         {unlockedIndex === storyData.length - 1 && (
-          <div className="text-center py-20 opacity-0 animate-[fadeIn_2s_ease-in_forwards]">
-            <p className="text-bhai-gold font-serif italic text-2xl mb-4">
-              Shubh Mastu
-            </p>
-            <p className="text-slate-500 text-sm">
-              (Let there be auspiciousness)
-            </p>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-center py-24 md:py-32 border-t border-white/5 mt-20"
+          >
+            <p className="text-bhai-gold font-serif italic text-3xl md:text-5xl mb-6 px-4">Shubh Mastu</p>
+            <p className="text-slate-500 text-xs md:text-sm uppercase tracking-[0.4em] mb-12 italic px-4">Your Sankalpa is sealed with grace.</p>
             <button 
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="mt-12 p-4 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
-              aria-label="Scroll to top"
+              onClick={() => setShowNamavali(true)} 
+              className="px-8 md:px-16 py-4 md:py-5 bg-bhai-gold text-bhai-dark font-black text-sm md:text-xl rounded-full hover:bg-white transition-all shadow-2xl hover:shadow-bhai-gold/40 uppercase tracking-widest"
             >
-              <ArrowUp className="w-6 h-6 text-slate-400" />
+              Recite 108 Sacred Names
             </button>
-          </div>
+          </motion.div>
         )}
-
       </main>
 
-      {/* Fixed Sticky Progress/Ambience bar */}
-      <div className="fixed bottom-0 left-0 w-full h-1 bg-gray-800 z-50">
-        <div 
-          className="h-full bg-gradient-to-r from-bhai-orange via-bhai-gold to-bhai-orange transition-all duration-1000 ease-out"
-          style={{ width: `${((unlockedIndex + 1) / storyData.length) * 100}%` }}
-        ></div>
-      </div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        body { scrollbar-width: none; -ms-overflow-style: none; overflow-x: hidden; }
+        ::-webkit-scrollbar { display: none; }
+      `}} />
     </div>
   );
 }
