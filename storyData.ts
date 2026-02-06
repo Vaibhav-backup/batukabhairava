@@ -3,12 +3,12 @@ import { InteractionType, StorySegment } from './types';
 export const storyData: StorySegment[] = [
   {
     id: 'intro',
-    title: 'The Eternal Sentinel of Light',
+    title: 'The Guardian of Kashi',
     icon: 'Moon',
     content: [
-      "In the heart of Kashi—the luminous city that even the Great Deluge cannot touch—the air is thick with the scent of wet earth and burning camphor. Here, where the Ganges whispers secrets of a thousand lifetimes, the cosmic order finds its most unexpected guardian.",
-      "He does not appear as a terrifying titan of destruction. Instead, look closer into the shadows of the ancient alleyways. You will see a child, barely five years old, his skin the radiant hue of a blue lotus at dusk, his eyes shimmering with an ancient, playful wisdom that predates the stars.",
-      "This is Batuka Bhairava. To the scholar, He is the esoteric nucleus of Tantra; to the commoner, He is the beloved boy who walks with a loyal dog. But to the one in crisis, He is the Aapatuddharak—the miraculous hands that reach through the darkness to pull a drowning soul into the light of Grace."
+      "In the timeless city of Kashi, where the Ganges flows with the weight of ancient prayers, there exists a guardian unlike any other. He is not a towering warrior with thunderbolts, nor a sage in deep meditation. He is a child—barely five years old—radiant, innocent, yet holding the mysteries of the universe in his small hands.",
+      "This is Batuka Bhairava, the child form of Lord Shiva. To the uninitiated, he appears as a playful boy accompanied by a dog. But to the seeker, he is the 'Aapatuddharak'—the swift remover of misfortunes. In the esoteric traditions of Tantra, he is the first gateway to grace, the one who takes the devotee by the finger and leads them through the terrifying darkness of ego into the light of awareness.",
+      "But how did the Lord of Destruction, the fierce Mahakala, come to take such a tender, approachable form? The story takes us back to a time when the universe trembled under a shadow that no adult god could lift."
     ],
     interactionRequired: InteractionType.LIGHT_LAMP,
     glossary: [
@@ -19,12 +19,12 @@ export const storyData: StorySegment[] = [
   },
   {
     id: 'crisis',
-    title: 'The Shadow That Choked the Heavens',
+    title: 'The Shadow of Aapad',
     icon: 'CloudLightning',
     content: [
-      "Eons ago, a shadow descended that even the Sun could not pierce. A demon named Aapad had woven a tapestry of chaos across the three worlds. Through terrifying penance, he had secured a boon from Brahma: 'May I be invincible to any man, god, or beast who has tasted the bitterness of age.'",
-      "Aapad laughed, his voice like grinding stones. 'Who can stop a calamity that has no weapon to strike it?' He believed himself immortal because he had forgotten the power of the Unconditioned. He silenced the temple bells and turned the rivers into rivers of sand.",
-      "The universe began to wilt. Fear became the only currency. The Devas, stripped of their radiance, realized they were facing an obstacle that power alone could not overcome. They needed a force that was simultaneously fierce and innocent."
+      "It began with a disturbance in the ether. A demon named Aapad had risen to power. Aapad was not just a physical being; he was the embodiment of sudden calamities, insurmountable obstacles, and the crushing weight of fear.",
+      "Aapad had performed severe penance to please Lord Brahma. When the Creator appeared, Aapad asked for a boon so cunning it baffled the gods: 'May I be invincible against all gods, demons, humans, and beasts. Let no weapon forged by adults harm me. Let my end come only at the hands of a five-year-old child.'",
+      "Aapad laughed as the boon was granted. In his arrogance, he believed no child could possess the strength to challenge him. Who would send a toddler to fight a titan? Secure in his immortality, Aapad unleashed a reign of terror. He blocked the paths of righteousness, choked the flow of rivers, and silenced the Vedic chants."
     ],
     interactionRequired: InteractionType.RING_BELL,
     glossary: [
@@ -34,12 +34,13 @@ export const storyData: StorySegment[] = [
   },
   {
     id: 'manifestation',
-    title: 'The Outburst of Divine Radiance',
+    title: 'The Radiant Child',
     icon: 'Sun',
     content: [
-      "On the frozen peaks of Mount Kailash, Lord Shiva sat in a stillness so profound it held the weight of the universe. Beside him, Goddess Parvati watched as the Devas arrived, their faces etched with despair.",
-      "Shiva did not draw his sword. He simply opened his eyes. In that moment, a pillar of fire erupted, tearing through the celestial fabric. From this blinding brilliance, a laughter rang out—sweet as a flute, yet deep as thunder.",
-      "Stepping from the flames was a boy of unmatched beauty. His hair was adorned with peacock feathers, and around his neck hung a garland of wild forest flowers. In his small hands, he balanced the Trishula and the Kapala. He was the raw, unconditioned potency of Shiva, manifested in the form of a child."
+      "Desperate, the Devas rushed to the summit of Mount Kailash. They found Lord Shiva in deep meditation, with the Goddess Parvati by his side. They bowed and wept, explaining the boon of Aapad and the hopelessness of their situation.",
+      "Lord Shiva opened his eyes, which held the calmness of an infinite ocean. He exchanged a knowing glance with the Goddess. The solution was not to send a warrior, but to manifest the raw, unconditioned potential of the Divine.",
+      "Suddenly, a blinding brilliance erupted from Shiva’s form. From this light, a figure emerged. He was a beautiful boy, appearing no older than five. His skin was the color of blue lotus flowers. His hair was matted yet adorned with peacock feathers. In his hands, he held a trishula (trident), a damaru (drum), and a kapala (skull-cup).",
+      "The Devas gasped in awe. They sensed that this child carried the combined potency of the Trinity and the nurturing ferocity of the Mother Goddess. He was small, yet he cast a shadow that covered the universe."
     ],
     interactionRequired: InteractionType.OFFER_FLOWER,
     glossary: [
@@ -49,12 +50,12 @@ export const storyData: StorySegment[] = [
   },
   {
     id: 'battle',
-    title: 'The Play of Liberation',
+    title: 'The Divine Play',
     icon: 'Sword',
     content: [
-      "The demon Aapad met the child on the cosmic battlefield. 'Go back to your mother, little one,' the demon sneered, reaching out with a claw of shadows. Batuka Bhairava merely tilted his head and smiled.",
-      "What followed was not a war, but a Leela—a divine sport. As Aapad hurled mountains, the Child-God caught them like balls of cotton. As the demon unleashed storms of fear, Batuka laughed, and the sound shattered the shadows into dust.",
-      "Realizing his end was near, the demon trembled. Batuka Bhairava took a single step, and the ground beneath Aapad turned into a sea of peace. With a touch lighter than a feather, the Lord's trident pierced the demon's heart, turning his malice into pure, white light."
+      "Batuka Bhairava, followed by a celestial dog who was none other than the Vedas in animal form, descended to the battlefield. The demon laughed. 'Go home, little one, before you get hurt.'",
+      "Batuka did not speak. He merely smiled. For him, this was not a war; it was 'Leela'—divine play. Aapad hurled a mountain; Batuka caught it like a ball. Aapad unleashed storms of fire; Batuka blew them out like a candle.",
+      "The demon's amusement turned to terror. Batuka Bhairava grew in presence, his aura filling the sky. With a playful yet decisive movement, he raised his trident and pierced the demon's heart. Aapad dissolved not into blood, but into light, liberated by the touch of the Lord."
     ],
     interactionRequired: InteractionType.NONE,
     glossary: [
@@ -64,12 +65,12 @@ export const storyData: StorySegment[] = [
   },
   {
     id: 'protector',
-    title: 'The Promise of the Bell',
+    title: 'Aapatuddharak: The Savior',
     icon: 'ShieldCheck',
     content: [
-      "With the calamity lifted, the gods bowed in reverence. But Batuka Bhairava did not return to the high peaks. He looked towards the burning ghats and the crowded streets of Kashi and said: 'I shall stay here. For my children will always face demons of their own making—fear, doubt, and time.'",
-      "He became the Kshetrapal, the guardian of the field. He promised that whoever calls upon him with the simplicity of a child would find their calamities dissolved before they even reached the door.",
-      "Even now, it is said that in the dead of night, you can hear the tinkling of silver anklets in the narrow lanes of Varanasi. It is the Child-God, patrolling his city, making sure the shadows stay exactly where they belong—at his feet."
+      "With Aapad defeated, the gods named him 'Aapatuddharak Bhairava'. But Batuka chose to remain accessible. He took his place in Kashi and in the hearts of the simple.",
+      "He declared, 'Whoever remembers me in their darkest hour, whoever treats the innocent with kindness, and whoever feeds the hungry, I shall stand by them like a rock.'",
+      "He became the deity of the swift path. While other forms of Shiva might demand austere penance, Batuka asks only for a child-like trust. He is the guardian who walks the streets of Kashi at night, his silver anklets tinkling, ensuring his devotees sleep in peace."
     ],
     interactionRequired: InteractionType.NONE,
     glossary: [
@@ -78,11 +79,11 @@ export const storyData: StorySegment[] = [
   },
   {
     id: 'modern',
-    title: 'Seal Your Devotion',
+    title: 'Whispers of Grace',
     icon: 'Heart',
     content: [
-      "The story of Batuka Bhairava is not a tale of the past. It is a living pulse. Every obstacle in your path is but an invitation for the Radiant Child to step forward and play.",
-      "As you reach the end of this journey, remember: The Divine is never further than a single, sincere call. Feed a hungry soul, protect the innocent, and the Guardian of Kashi will walk beside you forever.",
+      "Even today, the presence of Batuka Bhairava is felt. Whether it's a student in Varanasi finding courage before an exam, or a traveler finding their way home in the dark alleys, his presence is a comforting whisper in the chaos of life.",
+      "Batuka Bhairava teaches us that the Divine is not just a distant force, but a playful, protective presence waiting for us to simply call out his name.",
       "**Om Vatuka Bhairavaya Namaha**"
     ],
     interactionRequired: InteractionType.APPLY_TILAK
