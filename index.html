@@ -36,33 +36,22 @@
       }
     </script>
     <style>
-      html {
+      html, body {
         background-color: #070b14;
-        /* Ensure the container is scrollable for Lenis */
-        overflow-y: scroll;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none;  /* IE and Edge */
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100%;
       }
       
       body {
-        margin: 0;
         color: #e2e8f0;
         font-family: 'Inter', sans-serif;
-        /* Prevent horizontal scroll while allowing Lenis to manage vertical */
-        overflow-x: hidden; 
+        overflow-x: hidden;
       }
 
-      /* Hide scrollbar for Chrome, Safari and Opera */
-      html::-webkit-scrollbar {
-        display: none;
-      }
-
-      .prose-serif {
-        font-family: 'Crimson Pro', serif;
-      }
-      
-      /* Lenis Mandatory Configuration */
-      html.lenis, html.lenis body {
+      /* Lenis specific fixes for mouse scroll */
+      html.lenis {
         height: auto;
       }
       .lenis.lenis-smooth {
@@ -74,8 +63,9 @@
       .lenis.lenis-stopped {
         overflow: hidden;
       }
-      .lenis.lenis-scrolling iframe {
-        pointer-events: none;
+
+      .prose-serif {
+        font-family: 'Crimson Pro', serif;
       }
 
       ::selection {
@@ -83,22 +73,22 @@
         color: #fbbf24;
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react/": "https://esm.sh/react@18.3.1/",
-    "react-dom": "https://esm.sh/react-dom@18.3.1",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "framer-motion": "https://esm.sh/framer-motion@11.11.11?external=react,react-dom",
-    "lucide-react": "https://esm.sh/lucide-react@0.454.0?external=react",
-    "react-lenis": "https://esm.sh/lenis@1.1.18/react?external=react,react-dom",
-    "lenis": "https://esm.sh/lenis@1.1.18",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
-  }
-}
-</script>
-</head>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.3.1",
+        "react/": "https://esm.sh/react@18.3.1/",
+        "react-dom": "https://esm.sh/react-dom@18.3.1",
+        "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+        "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+        "framer-motion": "https://esm.sh/framer-motion@11.11.11?external=react,react-dom",
+        "lucide-react": "https://esm.sh/lucide-react@0.454.0?external=react",
+        "react-lenis": "https://esm.sh/lenis@1.1.18/react?external=react,react-dom",
+        "lenis": "https://esm.sh/lenis@1.1.18"
+      }
+    }
+    </script>
+  </head>
   <body>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>

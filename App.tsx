@@ -28,7 +28,6 @@ function App() {
   const lightIntensity = (unlockedIndex / (storyData.length - 1)) * 100;
 
   useEffect(() => {
-    // Only scroll to view if the Sankalpa is already set
     if (hasSetSankalpa && unlockedIndex > 0 && sectionRefs.current[unlockedIndex]) {
       setTimeout(() => {
         sectionRefs.current[unlockedIndex]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -44,7 +43,6 @@ function App() {
 
     try {
       if (GOOGLE_SHEET_URL) {
-        // No-cors mode allows triggering the script without CORS headers requirements from Apps Script
         await fetch(GOOGLE_SHEET_URL, {
           method: 'POST',
           mode: 'no-cors',
@@ -75,12 +73,11 @@ function App() {
     <ReactLenis root options={{ 
       lerp: 0.1, 
       duration: 1.2, 
-      smoothWheel: true, 
-      wheelMultiplier: 1, 
-      touchMultiplier: 2
+      smoothWheel: true,
+      syncTouch: true
     }}>
       <div 
-        className="relative min-h-screen text-slate-100 selection:bg-bhai-gold/20 selection:text-bhai-gold transition-colors duration-[3000ms]" 
+        className="min-h-screen text-slate-100 selection:bg-bhai-gold/20 selection:text-bhai-gold transition-colors duration-[3000ms]" 
         style={{ 
           backgroundColor: `rgb(${7 + (lightIntensity * 0.1)}, ${11 + (lightIntensity * 0.05)}, ${20 + (lightIntensity * 0.02)})` 
         }}
@@ -101,7 +98,6 @@ function App() {
                 className="max-w-md w-full bg-slate-900/40 border border-bhai-gold/10 p-8 md:p-12 rounded-[3rem] text-center shadow-2xl relative overflow-hidden backdrop-blur-md"
               >
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-bhai-gold to-transparent opacity-50"></div>
-                
                 <Feather className="w-12 h-12 text-bhai-gold mx-auto mb-8 opacity-60 animate-bounce" />
                 <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-6">Enter the Sanctuary</h2>
                 <p className="text-slate-400 text-sm mb-10 leading-relaxed font-serif italic">
@@ -165,9 +161,7 @@ function App() {
           >
             <div className="flex flex-col items-center space-y-3">
               <ScrollText className="w-6 h-6 text-bhai-gold group-hover:scale-110 transition-transform" />
-              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.5em] text-bhai-gold font-bold">
-                Namavali
-              </span>
+              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.5em] text-bhai-gold font-bold">Namavali</span>
             </div>
           </motion.button>
 
@@ -180,9 +174,7 @@ function App() {
           >
             <div className="flex flex-col items-center space-y-3">
               <MapPin className="w-6 h-6 text-bhai-red group-hover:animate-bounce" />
-              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.5em] text-bhai-red font-bold">
-                Temple
-              </span>
+              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.5em] text-bhai-red font-bold">Temple</span>
             </div>
           </motion.button>
         </div>
@@ -192,7 +184,7 @@ function App() {
         </AnimatePresence>
 
         {/* Hero Header */}
-        <header className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+        <header className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6">
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
