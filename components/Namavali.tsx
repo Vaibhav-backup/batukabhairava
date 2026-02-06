@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ScrollText, Play, Pause, ListMusic, ListOrdered } from 'lucide-react';
@@ -67,7 +66,7 @@ export const Namavali: React.FC<NamavaliProps> = ({ onClose }) => {
       className="fixed inset-0 z-[100] bg-bhai-dark/98 backdrop-blur-3xl overflow-y-auto"
       data-lenis-prevent
     >
-      <div className="max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-12 pb-40">
+      <div className="min-h-full max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-12 pb-40">
         
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 md:mb-12 border-b border-white/10 pb-6 sticky top-0 bg-bhai-dark/95 backdrop-blur-md z-50 py-4 gap-6">
@@ -78,7 +77,7 @@ export const Namavali: React.FC<NamavaliProps> = ({ onClose }) => {
                 {activeTab === '108' ? 'Ashtottara Sata Namavali' : 'Batuka Bhairava Sahasranama'}
               </h2>
               <p className={`${accentColor} opacity-60 text-[10px] md:text-sm italic font-serif transition-colors duration-500`}>
-                {activeTab === '108' ? '108 Sacred Names' : 'Full Sahasranama'}
+                {activeTab === '108' ? '108 Sacred Names' : 'Full Sahasranama (1000 Names)'}
               </p>
             </div>
           </div>
@@ -158,7 +157,7 @@ export const Namavali: React.FC<NamavaliProps> = ({ onClose }) => {
                 key={`${activeTab}-${index}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: Math.min(index * 0.005, 0.4) }}
+                transition={{ delay: Math.min(index * 0.002, 0.3) }}
                 className="group flex items-start space-x-3 p-3 md:p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] transition-all border border-white/5 hover:border-white/10"
               >
                 <div className={`flex-shrink-0 w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-[10px] ${accentColor} font-mono group-hover:scale-110 transition-transform`}>

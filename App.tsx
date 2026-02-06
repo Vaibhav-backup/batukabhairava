@@ -4,7 +4,8 @@ import { StorySection } from './components/StorySection';
 import { Namavali } from './components/Namavali';
 import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather } from 'lucide-react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
-import { ReactLenis } from 'react-lenis';
+// Using direct URL to prevent build resolution errors for non-installed packages
+import { ReactLenis } from 'https://esm.sh/lenis@1.1.20/react';
 
 function App() {
   const [unlockedIndex, setUnlockedIndex] = useState(0);
@@ -48,7 +49,7 @@ function App() {
   };
 
   return (
-    <ReactLenis root>
+    <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
       <div className={`min-h-screen bg-bhai-dark text-slate-100 overflow-x-hidden transition-colors duration-[3000ms] selection:bg-bhai-gold/20 selection:text-bhai-gold`} 
            style={{ backgroundColor: `rgb(${15 + (lightIntensity * 0.1)}, ${23 + (lightIntensity * 0.05)}, ${42 + (lightIntensity * 0.02)})` }}>
         
@@ -242,11 +243,6 @@ function App() {
             </motion.div>
           )}
         </main>
-
-        <style dangerouslySetInnerHTML={{ __html: `
-          body { scrollbar-width: none; -ms-overflow-style: none; overflow-x: hidden; }
-          ::-webkit-scrollbar { display: none; }
-        `}} />
       </div>
     </ReactLenis>
   );
