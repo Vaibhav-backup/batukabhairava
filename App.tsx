@@ -5,8 +5,9 @@ import { Namavali } from './components/Namavali';
 import { BhairavaForms } from './components/BhairavaForms';
 import { KaalBhairavStory } from './components/KaalBhairavStory';
 import { SwarnakarshanaBhairavStory } from './components/SwarnakarshanaBhairavStory';
+import { MahakalBhairavStory } from './components/MahakalBhairavStory';
 import { AshtaBhairavaPage } from './components/AshtaBhairavaPage';
-import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather, Compass, Clock, Coins, Shield, Menu, X as CloseIcon } from 'lucide-react';
+import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather, Compass, Clock, Coins, Shield, Menu, X as CloseIcon, Infinity as InfinityIcon } from 'lucide-react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
   const [showForms, setShowForms] = useState(false);
   const [showKaalBhairav, setShowKaalBhairav] = useState(false);
   const [showSwarnaBhairav, setShowSwarnaBhairav] = useState(false);
+  const [showMahakalBhairav, setShowMahakalBhairav] = useState(false);
   const [showAshtaBhairav, setShowAshtaBhairav] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [sankalpa, setSankalpa] = useState('');
@@ -55,12 +57,12 @@ function App() {
   };
 
   const mobileActions = [
+    { id: 'mahakal', label: 'Mahakal', icon: <InfinityIcon className="w-5 h-5" />, color: 'text-slate-200', onClick: () => setShowMahakalBhairav(true) },
     { id: 'names', label: 'Names', icon: <ScrollText className="w-5 h-5" />, color: 'text-bhai-gold', onClick: () => setShowNamavali(true) },
     { id: 'ashta', label: 'Ashta', icon: <Shield className="w-5 h-5" />, color: 'text-bhai-gold', onClick: () => setShowAshtaBhairav(true) },
     { id: 'kaal', label: 'Kaal', icon: <Clock className="w-5 h-5" />, color: 'text-bhai-red', onClick: () => setShowKaalBhairav(true) },
     { id: 'swarna', label: 'Swarna', icon: <Coins className="w-5 h-5" />, color: 'text-bhai-gold', onClick: () => setShowSwarnaBhairav(true) },
     { id: 'forms', label: 'Forms', icon: <Compass className="w-5 h-5" />, color: 'text-bhai-orange', onClick: () => setShowForms(true) },
-    { id: 'temple', label: 'Temple', icon: <MapPin className="w-5 h-5" />, color: 'text-bhai-red', onClick: () => window.open('https://www.google.com/maps/search/Batuka+Bhairava+Temple+Varanasi', '_blank') },
   ];
 
   return (
@@ -207,6 +209,17 @@ function App() {
         <div className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col space-y-2">
           <motion.button
             whileHover={{ x: -8 }}
+            onClick={() => setShowMahakalBhairav(true)}
+            className="bg-slate-900/40 backdrop-blur-2xl border border-slate-200/20 border-r-0 p-4 pl-6 rounded-l-3xl group transition-all"
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <InfinityIcon className="w-6 h-6 text-slate-200 group-hover:scale-110" />
+              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.4em] text-slate-200 font-bold">Mahakal</span>
+            </div>
+          </motion.button>
+
+          <motion.button
+            whileHover={{ x: -8 }}
             onClick={() => setShowForms(true)}
             className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-orange/20 border-r-0 p-4 pl-6 rounded-l-3xl group transition-all"
           >
@@ -255,6 +268,7 @@ function App() {
           {showForms && <BhairavaForms onClose={() => setShowForms(false)} />}
           {showKaalBhairav && <KaalBhairavStory onClose={() => setShowKaalBhairav(false)} />}
           {showSwarnaBhairav && <SwarnakarshanaBhairavStory onClose={() => setShowSwarnaBhairav(false)} />}
+          {showMahakalBhairav && <MahakalBhairavStory onClose={() => setShowMahakalBhairav(false)} />}
           {showAshtaBhairav && <AshtaBhairavaPage onClose={() => setShowAshtaBhairav(false)} />}
         </AnimatePresence>
 

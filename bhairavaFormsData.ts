@@ -93,11 +93,20 @@ export const ashtaBhairavas: BhairavaForm[] = [
 
 export const supremeBhairavas: BhairavaForm[] = [
   {
+    id: 'mahakal',
+    name: 'Mahakal Bhairava',
+    translation: 'The Primordial Lord',
+    vehicle: 'None / The Void',
+    description: 'The first and original manifestation. He is the eternal darkness from which all light is born, and the final dissolution where all things return. Representing the supreme consciousness beyond time, He is the source of all 64 Bhairavas.',
+    color: 'text-slate-200',
+    mantra: 'Om Hreem Mahakal Bhairavaya Namah'
+  },
+  {
     id: 'kaal',
     name: 'Kaal Bhairava',
     translation: 'The Lord of Time',
     vehicle: 'Dog',
-    description: 'The Kotwal (Guardian) of Kashi and the Supreme Ruler of Time (Kaal). He was manifested from Shiva\'s wrath to cut off the fifth arrogant head of Brahma. He holds the severed head (Kapala) and wanders to teach the lesson that even the Creator is not above the law of Karma. He is the destroyer of the fear of death.',
+    description: 'The Kotwal (Guardian) of Kashi and the Supreme Ruler of Time (Kaal). He was manifested from Shiva\'s wrath to cut off the fifth arrogant head of Brahma. He holds the severed head (Kapala) and wanders to teach the lesson that even the Creator is not above the law of Karma.',
     color: 'text-bhai-red',
     mantra: 'Om Hreem Kaal Bhairavaya Namah'
   },
@@ -106,7 +115,7 @@ export const supremeBhairavas: BhairavaForm[] = [
     name: 'Swarnakarshana Bhairava',
     translation: 'The Attractor of Gold',
     vehicle: 'None (Seated)',
-    description: 'Unlike the fierce naked forms, Swarnakarshana Bhairava is "Sattvic". He has a red complexion, is dressed in golden silk, and is seated peacefully. He holds a vessel full of gold and miraculous gems. He is worshipped not just for material wealth, but for the "gold" of spiritual wisdom and sustenance.',
+    description: 'Unlike the fierce naked forms, Swarnakarshana Bhairava is "Sattvic". He has a red complexion, is dressed in golden silk, and is seated peacefully. He holds a vessel full of gold and miraculous gems, providing both material and spiritual abundance.',
     color: 'text-bhai-gold',
     mantra: 'Om Shreem Hreem Kleem Swarnakarshana Bhairavaya Namah'
   }
