@@ -1,4 +1,3 @@
-
 export enum InteractionType {
   NONE = 'NONE',
   LIGHT_LAMP = 'LIGHT_LAMP',
@@ -33,6 +32,7 @@ export interface BhairavaForm {
   mantra?: string;
   color: string;
   icon?: string;
+  image?: string;
 }
 
 export interface AppState {

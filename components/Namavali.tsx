@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ScrollText, Play, Pause, ListMusic, ListOrdered } from 'lucide-react';
@@ -24,10 +23,8 @@ export const Namavali: React.FC<NamavaliProps> = ({ onClose }) => {
   const currentNames = activeTab === '108' ? ashtottaraNames : sahasranamaNames;
   const accentColor = activeTab === '108' ? 'text-bhai-gold' : 'text-bhai-red';
   const bgColor = activeTab === '108' ? 'bg-bhai-gold' : 'bg-bhai-red';
-  const shadowColor = activeTab === '108' ? 'shadow-bhai-gold/40' : 'shadow-bhai-red/40';
 
   useEffect(() => {
-    // Stop audio when switching tabs
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.load();
@@ -54,139 +51,65 @@ export const Namavali: React.FC<NamavaliProps> = ({ onClose }) => {
     }
   };
 
-  const handleEnded = () => {
-    setIsPlaying(false);
-    setProgress(0);
-  };
-
   return (
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] bg-bhai-dark/98 backdrop-blur-3xl overflow-y-auto"
-      data-lenis-prevent
+      className="fixed inset-0 z-[200] bg-bhai-dark/98 backdrop-blur-3xl overflow-y-auto"
     >
-      <div className="max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-12 pb-40">
+      <div className="max-w-6xl mx-auto px-4 py-8 pb-40">
         
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 md:mb-12 border-b border-white/10 pb-6 sticky top-0 bg-bhai-dark/95 backdrop-blur-md z-50 py-4 gap-6">
-          <div className="flex items-center space-x-3 md:space-x-4">
-            <ScrollText className={`w-6 h-6 md:w-8 md:h-8 ${accentColor} transition-colors duration-500`} />
-            <div>
-              <h2 className="text-xl md:text-3xl font-serif font-bold text-white leading-tight">
-                {activeTab === '108' ? 'Ashtottara Sata Namavali' : 'Batuka Bhairava Sahasranama'}
-              </h2>
-              <p className={`${accentColor} opacity-60 text-[10px] md:text-sm italic font-serif transition-colors duration-500`}>
-                {activeTab === '108' ? '108 Sacred Names' : 'Full Sahasranama'}
-              </p>
-            </div>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 sticky top-0 bg-bhai-dark/95 backdrop-blur-md z-50 p-4 rounded-2xl border border-white/5 gap-4">
+          <div className="flex items-center space-x-3 w-full md:w-auto">
+            <ScrollText className={`w-6 h-6 ${accentColor}`} />
+            <h2 className="text-lg md:text-2xl font-serif font-bold text-white truncate">
+              {activeTab === '108' ? '108 Names' : 'Sahasranama'}
+            </h2>
           </div>
 
-          <div className="flex items-center space-x-2 bg-white/5 p-1.5 rounded-2xl border border-white/10">
+          <div className="flex items-center space-x-2 bg-white/5 p-1 rounded-xl w-full md:w-auto justify-center">
             <button 
               onClick={() => setActiveTab('108')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs md:text-sm font-bold tracking-widest transition-all ${activeTab === '108' ? 'bg-bhai-gold text-bhai-dark shadow-lg' : 'text-slate-400 hover:text-white'}`}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === '108' ? 'bg-bhai-gold text-bhai-dark' : 'text-slate-400'}`}
             >
-              <ListOrdered className="w-4 h-4" />
-              <span>108</span>
+              108
             </button>
             <button 
               onClick={() => setActiveTab('1000')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-xs md:text-sm font-bold tracking-widest transition-all ${activeTab === '1000' ? 'bg-bhai-red text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === '1000' ? 'bg-bhai-red text-white' : 'text-slate-400'}`}
             >
-              <ListMusic className="w-4 h-4" />
-              <span>1000</span>
+              1000
             </button>
           </div>
 
-          <button 
-            onClick={onClose}
-            className="absolute top-4 right-0 md:relative p-2 md:p-3 bg-white/5 hover:bg-white/10 rounded-full transition-all border border-white/10 flex-shrink-0"
-          >
-            <X className="w-5 h-5 md:w-6 md:h-6 text-white" />
+          <button onClick={onClose} className="p-2 bg-white/5 rounded-full md:relative absolute -top-2 -right-2">
+            <X className="w-5 h-5 text-white" />
           </button>
         </div>
 
-        {/* Audio Player Card */}
-        <div className="mb-8 md:mb-12 bg-white/5 p-4 md:p-8 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden group">
-          <div className={`absolute top-0 left-0 h-full w-1 ${bgColor} opacity-30 transition-colors duration-500`}></div>
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center space-x-4 md:space-x-6 w-full md:w-auto">
-              <button 
-                onClick={togglePlay}
-                className={`w-14 h-14 md:w-20 md:h-20 flex-shrink-0 flex items-center justify-center ${bgColor} rounded-full text-white hover:scale-105 transition-all duration-300 ${shadowColor} shadow-xl`}
-              >
-                {isPlaying ? <Pause className="w-6 h-6 md:w-10 md:h-10 fill-current" /> : <Play className="w-6 h-6 md:w-10 md:h-10 fill-current ml-1" />}
-              </button>
-              <div className="flex-1">
-                <p className="text-white font-serif text-lg md:text-2xl truncate">
-                  {activeTab === '108' ? '108 Names (Shree Ji)' : 'Sahasranama (Rajendra Kumar Vyas)'}
-                </p>
-                <p className="text-slate-400 text-xs md:text-sm font-sans uppercase tracking-[0.2em]">Sacred Recitation</p>
-              </div>
+        <div className="mb-8 bg-white/5 p-6 rounded-3xl border border-white/10 flex flex-col md:flex-row items-center gap-6">
+          <button onClick={togglePlay} className={`w-16 h-16 flex-shrink-0 flex items-center justify-center ${bgColor} rounded-full text-white shadow-xl`}>
+            {isPlaying ? <Pause className="w-8 h-8 fill-current" /> : <Play className="w-8 h-8 fill-current ml-1" />}
+          </button>
+          <div className="flex-1 w-full">
+            <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-2">
+              <motion.div className={`h-full ${bgColor}`} animate={{ width: `${progress}%` }} />
             </div>
-            
-            <div className="w-full md:w-1/2 flex flex-col items-center md:items-end gap-3">
-              <div className="w-full h-1.5 md:h-3 bg-white/10 rounded-full overflow-hidden relative">
-                <motion.div 
-                  className={`absolute left-0 top-0 h-full ${bgColor} transition-colors duration-500`}
-                  animate={{ width: `${progress}%` }}
-                  transition={{ type: 'tween', ease: 'linear' }}
-                />
-              </div>
-              <div className="flex justify-between w-full text-[8px] md:text-[10px] text-slate-500 uppercase tracking-widest font-bold">
-                <span>Temple Sanctuary</span>
-                <span>{isPlaying ? 'Reciting...' : 'Silent'}</span>
-              </div>
-            </div>
+            <p className="text-[10px] text-slate-500 uppercase tracking-widest text-center md:text-left">Listen to the Sacred Sound</p>
           </div>
-          <audio 
-            key={activeTab}
-            ref={audioRef}
-            src={audioSources[activeTab]}
-            onTimeUpdate={handleTimeUpdate}
-            onEnded={handleEnded}
-          />
         </div>
 
-        {/* Names Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4">
-          <AnimatePresence mode="wait">
-            {currentNames.map((name, index) => (
-              <motion.div 
-                key={`${activeTab}-${index}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: Math.min(index * 0.005, 0.4) }}
-                className="group flex items-start space-x-3 p-3 md:p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] transition-all border border-white/5 hover:border-white/10"
-              >
-                <div className={`flex-shrink-0 w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-[10px] ${accentColor} font-mono group-hover:scale-110 transition-transform`}>
-                  {index + 1}
-                </div>
-                <span className="text-sm md:text-base text-slate-300 group-hover:text-white transition-colors font-serif leading-tight pt-1">
-                  {name}
-                </span>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-
-        {/* Footer Mantra */}
-        <div className="mt-16 md:mt-24 pt-12 border-t border-white/10 text-center px-4">
-          <motion.p 
-            key={activeTab}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className={`${accentColor} font-serif italic text-xl md:text-3xl mb-4 transition-colors duration-500`}
-          >
-            {activeTab === '108' ? 'iti śrī baṭukabhairavāṣṭōttaraśatanāmāvaḻī' : 'iti śrī baṭukabhairava sahasranāmāvaḻī'}
-          </motion.p>
-          <p className="text-slate-500 text-[9px] md:text-xs font-sans uppercase tracking-[0.3em] md:tracking-[0.5em] max-w-lg mx-auto leading-relaxed">
-            The sound of His name is the shield against the darkness of time.
-          </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          {currentNames.map((name, index) => (
+            <div key={`${activeTab}-${index}`} className="flex items-center space-x-3 p-3 rounded-xl bg-white/[0.02] border border-white/5">
+              <span className={`text-[10px] font-mono ${accentColor}`}>{index + 1}</span>
+              <span className="text-sm text-slate-300 font-serif">{name}</span>
+            </div>
+          ))}
         </div>
       </div>
+      <audio ref={audioRef} src={audioSources[activeTab]} onTimeUpdate={handleTimeUpdate} onEnded={() => setIsPlaying(false)} />
     </motion.div>
   );
 };
