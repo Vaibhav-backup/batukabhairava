@@ -23,6 +23,18 @@ export interface StorySegment {
   glossary?: GlossaryTerm[];
 }
 
+export interface BhairavaForm {
+  id: string;
+  name: string;
+  translation: string;
+  vehicle: string;
+  direction?: string;
+  description: string;
+  mantra?: string;
+  color: string;
+  icon?: string;
+}
+
 export interface AppState {
   currentSegmentIndex: number;
   segmentsUnlocked: number;

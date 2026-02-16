@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { storyData } from './storyData';
 import { StorySection } from './components/StorySection';
 import { Namavali } from './components/Namavali';
-import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather } from 'lucide-react';
+import { BhairavaForms } from './components/BhairavaForms';
+import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather, Compass } from 'lucide-react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 
 function App() {
   const [unlockedIndex, setUnlockedIndex] = useState(0);
   const [showNamavali, setShowNamavali] = useState(false);
+  const [showForms, setShowForms] = useState(false);
   const [sankalpa, setSankalpa] = useState('');
   const [isSankalpaModalOpen, setIsSankalpaModalOpen] = useState(true);
   const [hasSetSankalpa, setHasSetSankalpa] = useState(false);
@@ -132,6 +134,21 @@ function App() {
             initial={{ x: -40, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             whileHover={{ x: 8 }}
+            onClick={() => setShowForms(true)}
+            className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-orange/20 border-l-0 p-3 md:p-4 pr-4 md:pr-6 rounded-r-3xl shadow-2xl group transition-all"
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <Compass className="w-5 h-5 md:w-6 md:h-6 text-bhai-orange group-hover:rotate-90 transition-transform duration-500" />
+              <span className="[writing-mode:vertical-lr] text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-bhai-orange font-bold">
+                Forms
+              </span>
+            </div>
+          </motion.button>
+
+          <motion.button
+            initial={{ x: -40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            whileHover={{ x: 8 }}
             onClick={() => setShowNamavali(true)}
             className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-gold/20 border-l-0 p-3 md:p-4 pr-4 md:pr-6 rounded-r-3xl shadow-2xl group transition-all"
           >
@@ -161,6 +178,10 @@ function App() {
 
         <AnimatePresence>
           {showNamavali && <Namavali onClose={() => setShowNamavali(false)} />}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {showForms && <BhairavaForms onClose={() => setShowForms(false)} />}
         </AnimatePresence>
 
         <header className={`relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6`}>
@@ -215,7 +236,7 @@ function App() {
           {storyData.map((segment, index) => (
             <StorySection
               key={segment.id}
-              ref={(el) => (sectionRefs.current[index] = el)}
+              ref={(el) => { sectionRefs.current[index] = el; }}
               segment={segment}
               isVisible={index <= unlockedIndex}
               isInteractionCompleted={index < unlockedIndex}
@@ -227,16 +248,24 @@ function App() {
             <motion.div 
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              className="text-center py-24 md:py-32 border-t border-white/5 mt-20"
+              className="text-center py-24 md:py-32 border-t border-white/5 mt-12"
             >
               <p className="text-bhai-gold font-serif italic text-3xl md:text-5xl mb-6 px-4">Shubh Mastu</p>
               <p className="text-slate-500 text-xs md:text-sm uppercase tracking-[0.4em] mb-12 italic px-4">Your Sankalpa is sealed with grace.</p>
-              <button 
-                onClick={() => setShowNamavali(true)} 
-                className="px-8 md:px-16 py-4 md:py-5 bg-bhai-gold text-bhai-dark font-black text-sm md:text-xl rounded-full hover:bg-white transition-all shadow-2xl hover:shadow-bhai-gold/40 uppercase tracking-widest"
-              >
-                Recite 108 Sacred Names
-              </button>
+              <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+                <button 
+                  onClick={() => setShowNamavali(true)} 
+                  className="px-8 md:px-16 py-4 md:py-5 bg-bhai-gold text-bhai-dark font-black text-sm md:text-xl rounded-full hover:bg-white transition-all shadow-2xl hover:shadow-bhai-gold/40 uppercase tracking-widest"
+                >
+                  Recite 108 Sacred Names
+                </button>
+                <button 
+                  onClick={() => setShowForms(true)} 
+                  className="px-8 md:px-16 py-4 md:py-5 border border-bhai-gold/30 text-bhai-gold font-black text-sm md:text-xl rounded-full hover:bg-bhai-gold/10 transition-all shadow-2xl uppercase tracking-widest"
+                >
+                  View All Forms
+                </button>
+              </div>
             </motion.div>
           )}
         </main>
