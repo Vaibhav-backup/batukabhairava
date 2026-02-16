@@ -32,7 +32,7 @@ export const ashtaBhairavas: BhairavaForm[] = [
     color: 'text-blue-400',
     description: 'He cuts through ignorance and grants victory over competitors. He is worshipped for confidence and destruction of fear.',
     mantra: 'Om Hreem Hreem Hreem Chanda Bhairavaya Namah',
-    image: 'https://res.cloudinary.com/dn6sk8mqh/image/upload/v1771242673/Asitanga-Bhairava_lxozn8.webp' // Reusing Asitanga as placeholder per list
+    image: 'https://res.cloudinary.com/dn6sk8mqh/image/upload/v1771242673/Asitanga-Bhairava_lxozn8.webp' 
   },
   {
     id: 'krodha',
@@ -87,7 +87,7 @@ export const ashtaBhairavas: BhairavaForm[] = [
     color: 'text-orange-400',
     description: 'He dissolves past sins and bad karma. He is the transformer who clears the path for spiritual evolution.',
     mantra: 'Om Hreem Hreem Hreem Samhara Bhairavaya Namah',
-    image: 'https://res.cloudinary.com/dn6sk8mqh/image/upload/v1771242672/Bheeshana-Bhairava_ltlcfr.webp' // Reusing Bhishana as placeholder
+    image: 'https://res.cloudinary.com/dn6sk8mqh/image/upload/v1771242672/Bheeshana-Bhairava_ltlcfr.webp' 
   }
 ];
 
@@ -110,4 +110,71 @@ export const supremeBhairavas: BhairavaForm[] = [
     color: 'text-bhai-gold',
     mantra: 'Om Shreem Hreem Kleem Swarnakarshana Bhairavaya Namah'
   }
+];
+
+export const sixtyFourBhairavas = [
+  "Nilakantha Bhairavaya",
+  "Vishalaksha Bhairavaya",
+  "Martanda Bhairavaya",
+  "Mundana Prabhu Bhairavaya",
+  "Svachanda Bhairavaya",
+  "Ati Santhushta Bhairavaya",
+  "Kechara Bhairavaya",
+  "Samhara Bhairavaya",
+  "Virupaaksha Bhairavaya",
+  "Vishwa Rupa Bhairavaya",
+  "Nana Rupa Bhairavaya",
+  "Parama Bhairavaya",
+  "Dandha Karna Bhairavaya",
+  "Sudha Patra Bhairavaya",
+  "Kriranna Bhairavaya",
+  "Unmatta Bhairavaya",
+  "Meghanatha Bhairavaya",
+  "Mano Vegha Bhairavaya",
+  "Kshetrapalaka Bhairavaya",
+  "Karaala Bhairavaya",
+  "Nirbhaya Bhairavaya",
+  "Pishitha Bhairavaya",
+  "Prekshata Bhairavaya",
+  "Loka Pala Bhairavaya",
+  "Gada Dhara Bhairavaya",
+  "Vajra Hasta Bhairavaya",
+  "Maha Kaala Bhairavaya",
+  "Prachanda Bhairavaya",
+  "Pralaya Bhairavaya",
+  "Tripurantaka Bhairavaya",
+  "Bhumikampa Bhairavaya",
+  "Bhishana Bhairavaya",
+  "Samhara Bhairavaya",
+  "Kula Pala Bhairavaya",
+  "Runda Maala Bhairavaya",
+  "Raktangga Bhairavaya",
+  "Pingalekshna Bhairavaya",
+  "Abhra Rupa Bhairavaya",
+  "Dhara Palana Bhairavaya",
+  "Praja Palana Bhairavaya",
+  "Kula Bhairavaya",
+  "Mantra Nayaka Bhairavaya",
+  "Rudra Bhairavaya",
+  "Pita Maha Bhairavaya",
+  "Vishnu Bhairavaya",
+  "Vatuka Natha Bhairavaya",
+  "Kapala Bhairavaya",
+  "Bhuta Vetala Bhairavaya",
+  "Trinetra Bhairavaya",
+  "Tripurantaka Bhairavaya",
+  "Varada Bhairavaya",
+  "Parvata Vahana Bhairavaya",
+  "Sashi Vahana Bhairavaya",
+  "Kapala Bhushana Bhairavaya",
+  "Sarvagnya Bhairavaya",
+  "Sarva Deva Bhairavaya",
+  "Ishaana Bhairavaya",
+  "Sarva Bhuta Bhairavaya",
+  "Ghora Natha Bhairavaya",
+  "Bhayankara Bhairavaya",
+  "Bhukti Mukti Phala Prada Bhairavaya",
+  "Kalagni Bhairavaya",
+  "Maha Roudra Bhairavaya",
+  "Dakshinabhistitha Bhairavaya"
 ];

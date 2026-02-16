@@ -182,28 +182,6 @@ function App() {
         <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col space-y-2">
           <motion.button
             whileHover={{ x: 8 }}
-            onClick={() => setShowAshtaBhairav(true)}
-            className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-gold/20 border-l-0 p-4 pr-6 rounded-r-3xl group transition-all"
-          >
-            <div className="flex flex-col items-center space-y-2">
-              <Shield className="w-6 h-6 text-bhai-gold group-hover:scale-110 transition-transform" />
-              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.4em] text-bhai-gold font-bold">Ashta</span>
-            </div>
-          </motion.button>
-
-          <motion.button
-            whileHover={{ x: 8 }}
-            onClick={() => setShowForms(true)}
-            className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-orange/20 border-l-0 p-4 pr-6 rounded-r-3xl group transition-all"
-          >
-            <div className="flex flex-col items-center space-y-2">
-              <Compass className="w-6 h-6 text-bhai-orange group-hover:rotate-90 transition-transform duration-500" />
-              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.4em] text-bhai-orange font-bold">Forms</span>
-            </div>
-          </motion.button>
-
-          <motion.button
-            whileHover={{ x: 8 }}
             onClick={() => setShowNamavali(true)}
             className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-gold/20 border-l-0 p-4 pr-6 rounded-r-3xl group transition-all"
           >
@@ -212,10 +190,43 @@ function App() {
               <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.4em] text-bhai-gold font-bold">Names</span>
             </div>
           </motion.button>
+
+          <motion.button
+            whileHover={{ x: 8 }}
+            onClick={() => window.open('https://www.google.com/maps/search/Batuka+Bhairava+Temple+Varanasi', '_blank')}
+            className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-red/20 border-l-0 p-4 pr-6 rounded-r-3xl group transition-all"
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <MapPin className="w-6 h-6 text-bhai-red group-hover:animate-bounce" />
+              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.4em] text-bhai-red font-bold">Temple</span>
+            </div>
+          </motion.button>
         </div>
 
         {/* Desktop Sidebar (Right) */}
         <div className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col space-y-2">
+          <motion.button
+            whileHover={{ x: -8 }}
+            onClick={() => setShowForms(true)}
+            className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-orange/20 border-r-0 p-4 pl-6 rounded-l-3xl group transition-all"
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <Compass className="w-6 h-6 text-bhai-orange group-hover:rotate-90 transition-transform duration-500" />
+              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.4em] text-bhai-orange font-bold">Forms</span>
+            </div>
+          </motion.button>
+
+          <motion.button
+            whileHover={{ x: -8 }}
+            onClick={() => setShowAshtaBhairav(true)}
+            className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-gold/20 border-r-0 p-4 pl-6 rounded-l-3xl group transition-all"
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <Shield className="w-6 h-6 text-bhai-gold group-hover:scale-110 transition-transform" />
+              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.4em] text-bhai-gold font-bold">Ashta</span>
+            </div>
+          </motion.button>
+
           <motion.button
             whileHover={{ x: -8 }}
             onClick={() => setShowKaalBhairav(true)}
