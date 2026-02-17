@@ -87,7 +87,7 @@ export const ashtaBhairavas: BhairavaForm[] = [
     color: 'text-orange-400',
     description: 'He dissolves past sins and bad karma. He is the transformer who clears the path for spiritual evolution.',
     mantra: 'Om Hreem Hreem Hreem Samhara Bhairavaya Namah',
-    image: 'https://res.cloudinary.com/dn6sk8mqh/image/upload/v1771242672/Bheeshana-Bhairava_ltlcfr.webp' 
+    image: 'https://res.cloudinary.com/dn6sk8mqh/image/upload/v1771242672/Samhara-Bhairava-1024x1024_dcbxlh.jpg' 
   }
 ];
 
