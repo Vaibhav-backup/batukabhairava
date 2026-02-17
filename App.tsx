@@ -10,7 +10,7 @@ import { MahakalBhairavStory } from './components/MahakalBhairavStory';
 import { AshtaBhairavaPage } from './components/AshtaBhairavaPage';
 import { BhairavaPanchang } from './components/BhairavaPanchang';
 import { SankalpaWall } from './components/SankalpaWall';
-import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather, Compass, Clock, Coins, Shield, Menu, X as CloseIcon, Infinity as InfinityIcon } from 'lucide-react';
+import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather, Compass, Clock, Coins, Shield, Menu, X as CloseIcon, Infinity as InfinityIcon, Users } from 'lucide-react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
   const [showSwarnaBhairav, setShowSwarnaBhairav] = useState(false);
   const [showMahakalBhairav, setShowMahakalBhairav] = useState(false);
   const [showAshtaBhairav, setShowAshtaBhairav] = useState(false);
+  const [showSankalpaWallOverlay, setShowSankalpaWallOverlay] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [sankalpa, setSankalpa] = useState('');
   const [isSankalpaModalOpen, setIsSankalpaModalOpen] = useState(true);
@@ -39,7 +40,6 @@ function App() {
   const lightIntensity = (unlockedIndex / (storyData.length - 1)) * 100;
 
   useEffect(() => {
-    // Check if it's a special day (Mock: Ashtami is every 10th day in our simulator)
     const day = new Date().getDate();
     setIsSpecialDay(day % 10 === 8);
   }, []);
@@ -67,15 +67,16 @@ function App() {
   };
 
   const mobileActions = [
-    { id: 'mahakal', label: 'Mahakal', icon: <InfinityIcon className="w-5 h-5" />, color: 'text-slate-200', onClick: () => setShowMahakalBhairav(true) },
+    { id: 'sankalpa', label: 'Sankalpa', icon: <Users className="w-5 h-5" />, color: 'text-bhai-gold', onClick: () => setShowSankalpaWallOverlay(true) },
     { id: 'names', label: 'Names', icon: <ScrollText className="w-5 h-5" />, color: 'text-bhai-gold', onClick: () => setShowNamavali(true) },
+    { id: 'temple', label: 'Temple', icon: <MapPin className="w-5 h-5" />, color: 'text-bhai-red', onClick: () => window.open('https://www.google.com/maps/search/Batuka+Bhairava+Temple+Varanasi', '_blank') },
+    { id: 'mahakal', label: 'Mahakal', icon: <InfinityIcon className="w-5 h-5" />, color: 'text-slate-200', onClick: () => setShowMahakalBhairav(true) },
     { id: 'ashta', label: 'Ashta', icon: <Shield className="w-5 h-5" />, color: 'text-bhai-gold', onClick: () => setShowAshtaBhairav(true) },
     { id: 'kaal', label: 'Kaal', icon: <Clock className="w-5 h-5" />, color: 'text-bhai-red', onClick: () => setShowKaalBhairav(true) },
     { id: 'swarna', label: 'Swarna', icon: <Coins className="w-5 h-5" />, color: 'text-bhai-gold', onClick: () => setShowSwarnaBhairav(true) },
     { id: 'forms', label: 'Forms', icon: <Compass className="w-5 h-5" />, color: 'text-bhai-orange', onClick: () => setShowForms(true) },
   ];
 
-  // Background color logic: Darker blue normally, deep crimson on special days
   const baseBg = isSpecialDay ? `rgb(${40 + (lightIntensity * 0.1)}, ${10 + (lightIntensity * 0.05)}, ${15 + (lightIntensity * 0.02)})` : `rgb(${15 + (lightIntensity * 0.1)}, ${23 + (lightIntensity * 0.05)}, ${42 + (lightIntensity * 0.02)})`;
 
   return (
@@ -155,9 +156,9 @@ function App() {
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 100 }}
-              className="fixed inset-0 z-[140] bg-black/90 backdrop-blur-3xl md:hidden flex flex-col items-center justify-center p-8"
+              className="fixed inset-0 z-[140] bg-black/90 backdrop-blur-3xl md:hidden flex flex-col items-center justify-center p-8 overflow-y-auto"
             >
-              <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-12">
+              <div className="grid grid-cols-2 gap-3 w-full max-w-sm mb-12">
                 {mobileActions.map((action) => (
                   <motion.button
                     key={action.id}
@@ -166,10 +167,10 @@ function App() {
                       action.onClick();
                       setShowMobileMenu(false);
                     }}
-                    className="flex flex-col items-center justify-center p-6 bg-white/5 border border-white/10 rounded-3xl"
+                    className="flex flex-col items-center justify-center p-5 bg-white/5 border border-white/10 rounded-2xl"
                   >
                     <div className={`${action.color} mb-2`}>{action.icon}</div>
-                    <span className="text-[10px] uppercase tracking-widest font-bold text-white/70">{action.label}</span>
+                    <span className="text-[9px] uppercase tracking-widest font-bold text-white/70">{action.label}</span>
                   </motion.button>
                 ))}
               </div>
@@ -196,7 +197,7 @@ function App() {
           </AnimatePresence>
         </div>
 
-        {/* Desktop Sidebar (Left) */}
+        {/* Desktop Sidebar (Left) - Grouping Names, Temple, and Sankalpa */}
         <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col space-y-2">
           <motion.div className="mb-4 px-4 w-60 translate-x-[-100%] hover:translate-x-0 transition-transform duration-500 bg-slate-900/60 backdrop-blur-2xl border border-white/10 rounded-r-3xl p-4">
              <BhairavaPanchang />
@@ -221,6 +222,17 @@ function App() {
             <div className="flex flex-col items-center space-y-2">
               <MapPin className="w-6 h-6 text-bhai-red group-hover:animate-bounce" />
               <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.4em] text-bhai-red font-bold">Temple</span>
+            </div>
+          </motion.button>
+
+          <motion.button
+            whileHover={{ x: 8 }}
+            onClick={() => setShowSankalpaWallOverlay(true)}
+            className="bg-slate-900/40 backdrop-blur-2xl border border-bhai-gold/20 border-l-0 p-4 pr-6 rounded-r-3xl group transition-all"
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <Users className="w-6 h-6 text-bhai-gold group-hover:scale-110" />
+              <span className="[writing-mode:vertical-lr] text-[10px] uppercase tracking-[0.4em] text-bhai-gold font-bold">Sankalpa</span>
             </div>
           </motion.button>
         </div>
@@ -290,6 +302,13 @@ function App() {
           {showSwarnaBhairav && <SwarnakarshanaBhairavStory onClose={() => setShowSwarnaBhairav(false)} />}
           {showMahakalBhairav && <MahakalBhairavStory onClose={() => setShowMahakalBhairav(false)} />}
           {showAshtaBhairav && <AshtaBhairavaPage onClose={() => setShowAshtaBhairav(false)} />}
+          {showSankalpaWallOverlay && (
+            <SankalpaWall 
+              isOverlay 
+              userSankalpa={hasSetSankalpa ? sankalpa : undefined} 
+              onClose={() => setShowSankalpaWallOverlay(false)} 
+            />
+          )}
         </AnimatePresence>
 
         <header className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-4 md:px-6">
