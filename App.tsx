@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { storyData } from './storyData';
 import { StorySection } from './components/StorySection';
@@ -7,6 +8,8 @@ import { KaalBhairavStory } from './components/KaalBhairavStory';
 import { SwarnakarshanaBhairavStory } from './components/SwarnakarshanaBhairavStory';
 import { MahakalBhairavStory } from './components/MahakalBhairavStory';
 import { AshtaBhairavaPage } from './components/AshtaBhairavaPage';
+import { BhairavaPanchang } from './components/BhairavaPanchang';
+import { SankalpaWall } from './components/SankalpaWall';
 import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather, Compass, Clock, Coins, Shield, Menu, X as CloseIcon, Infinity as InfinityIcon } from 'lucide-react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 
@@ -22,6 +25,7 @@ function App() {
   const [sankalpa, setSankalpa] = useState('');
   const [isSankalpaModalOpen, setIsSankalpaModalOpen] = useState(true);
   const [hasSetSankalpa, setHasSetSankalpa] = useState(false);
+  const [isSpecialDay, setIsSpecialDay] = useState(false);
   
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
   
@@ -33,6 +37,12 @@ function App() {
   });
 
   const lightIntensity = (unlockedIndex / (storyData.length - 1)) * 100;
+
+  useEffect(() => {
+    // Check if it's a special day (Mock: Ashtami is every 10th day in our simulator)
+    const day = new Date().getDate();
+    setIsSpecialDay(day % 10 === 8);
+  }, []);
 
   useEffect(() => {
     if (unlockedIndex > 0 && sectionRefs.current[unlockedIndex]) {
@@ -65,9 +75,12 @@ function App() {
     { id: 'forms', label: 'Forms', icon: <Compass className="w-5 h-5" />, color: 'text-bhai-orange', onClick: () => setShowForms(true) },
   ];
 
+  // Background color logic: Darker blue normally, deep crimson on special days
+  const baseBg = isSpecialDay ? `rgb(${40 + (lightIntensity * 0.1)}, ${10 + (lightIntensity * 0.05)}, ${15 + (lightIntensity * 0.02)})` : `rgb(${15 + (lightIntensity * 0.1)}, ${23 + (lightIntensity * 0.05)}, ${42 + (lightIntensity * 0.02)})`;
+
   return (
-    <div className="min-h-screen bg-bhai-dark text-slate-100 overflow-x-hidden transition-colors duration-[3000ms] selection:bg-bhai-gold/20 selection:text-bhai-gold" 
-           style={{ backgroundColor: `rgb(${15 + (lightIntensity * 0.1)}, ${23 + (lightIntensity * 0.05)}, ${42 + (lightIntensity * 0.02)})` }}>
+    <div className="min-h-screen text-slate-100 overflow-x-hidden transition-colors duration-[3000ms] selection:bg-bhai-gold/20 selection:text-bhai-gold" 
+           style={{ backgroundColor: baseBg }}>
         
         <AnimatePresence>
           {isSankalpaModalOpen && (
@@ -114,12 +127,12 @@ function App() {
           <motion.div 
             animate={{ opacity: [0.05, 0.1, 0.05], x: [-20, 20, -20] }}
             transition={{ duration: 10, repeat: Infinity }}
-            className="absolute bottom-0 w-full h-[60vh] bg-gradient-to-t from-bhai-gold/10 to-transparent blur-3xl"
+            className={`absolute bottom-0 w-full h-[60vh] bg-gradient-to-t ${isSpecialDay ? 'from-bhai-red/10' : 'from-bhai-gold/10'} to-transparent blur-3xl`}
           />
         </div>
 
         <motion.div
-          className="fixed top-0 left-0 right-0 h-1 bg-bhai-gold origin-left z-[210] shadow-[0_0_15px_#fbbf24]"
+          className={`fixed top-0 left-0 right-0 h-1 origin-left z-[210] shadow-[0_0_15px_rgba(251,191,36,0.5)] ${isSpecialDay ? 'bg-bhai-red' : 'bg-bhai-gold'}`}
           style={{ scaleX }}
         />
 
@@ -144,7 +157,7 @@ function App() {
               exit={{ opacity: 0, y: 100 }}
               className="fixed inset-0 z-[140] bg-black/90 backdrop-blur-3xl md:hidden flex flex-col items-center justify-center p-8"
             >
-              <div className="grid grid-cols-2 gap-4 w-full max-w-sm">
+              <div className="grid grid-cols-2 gap-4 w-full max-w-sm mb-12">
                 {mobileActions.map((action) => (
                   <motion.button
                     key={action.id}
@@ -159,6 +172,9 @@ function App() {
                     <span className="text-[10px] uppercase tracking-widest font-bold text-white/70">{action.label}</span>
                   </motion.button>
                 ))}
+              </div>
+              <div className="w-full max-w-sm">
+                <BhairavaPanchang />
               </div>
             </motion.div>
           )}
@@ -182,6 +198,10 @@ function App() {
 
         {/* Desktop Sidebar (Left) */}
         <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col space-y-2">
+          <motion.div className="mb-4 px-4 w-60 translate-x-[-100%] hover:translate-x-0 transition-transform duration-500 bg-slate-900/60 backdrop-blur-2xl border border-white/10 rounded-r-3xl p-4">
+             <BhairavaPanchang />
+          </motion.div>
+
           <motion.button
             whileHover={{ x: 8 }}
             onClick={() => setShowNamavali(true)}
@@ -274,8 +294,8 @@ function App() {
 
         <header className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-4 md:px-6">
           <motion.div className="relative mb-8 md:mb-16">
-            <div className="absolute inset-0 bg-bhai-gold/30 rounded-full blur-[40px] md:blur-[80px] animate-pulse"></div>
-            <div className="relative z-10 w-40 h-40 md:w-80 md:h-80 rounded-full p-1 bg-gradient-to-tr from-bhai-orange via-bhai-gold to-bhai-red">
+            <div className={`absolute inset-0 ${isSpecialDay ? 'bg-bhai-red/40' : 'bg-bhai-gold/30'} rounded-full blur-[40px] md:blur-[80px] animate-pulse`}></div>
+            <div className={`relative z-10 w-40 h-40 md:w-80 md:h-80 rounded-full p-1 bg-gradient-to-tr ${isSpecialDay ? 'from-bhai-red via-slate-900 to-bhai-red' : 'from-bhai-orange via-bhai-gold to-bhai-red'}`}>
               <div className="w-full h-full rounded-full overflow-hidden border-[3px] md:border-[6px] border-bhai-dark">
                 <img 
                   src="https://res.cloudinary.com/dn6sk8mqh/image/upload/v1770310739/batuka-bhairava-jayanti-understanding-the-young-bhairava-v0-uglb8gxys25f1_oqkuih.jpg" 
@@ -291,25 +311,25 @@ function App() {
             animate={{ y: 0, opacity: 1 }}
             className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-serif font-bold text-white mb-6 tracking-tighter leading-tight"
           >
-            Batuka <span className="text-bhai-gold italic">Bhairava</span>
+            Batuka <span className={`${isSpecialDay ? 'text-bhai-red' : 'text-bhai-gold'} italic`}>Bhairava</span>
           </motion.h1>
           
           <motion.div className="flex items-center justify-center space-x-4 mb-12">
-            <div className="w-8 md:w-24 h-[1px] bg-gradient-to-r from-transparent to-bhai-gold"></div>
-            <ShieldCheck className="w-5 h-5 text-bhai-gold" />
-            <div className="w-8 md:w-24 h-[1px] bg-gradient-to-l from-transparent to-bhai-gold"></div>
+            <div className={`w-8 md:w-24 h-[1px] bg-gradient-to-r from-transparent ${isSpecialDay ? 'to-bhai-red' : 'to-bhai-gold'}`}></div>
+            <ShieldCheck className={`w-5 h-5 ${isSpecialDay ? 'text-bhai-red' : 'text-bhai-gold'}`} />
+            <div className={`w-8 md:w-24 h-[1px] bg-gradient-to-l from-transparent ${isSpecialDay ? 'to-bhai-red' : 'to-bhai-gold'}`}></div>
           </motion.div>
 
           {hasSetSankalpa && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-8">
               <p className="text-slate-500 text-[10px] uppercase tracking-[0.4em] mb-1">Your Sankalpa</p>
-              <p className="text-bhai-gold text-lg md:text-2xl font-serif italic">"{sankalpa}"</p>
+              <p className={`${isSpecialDay ? 'text-bhai-red' : 'text-bhai-gold'} text-lg md:text-2xl font-serif italic`}>"{sankalpa}"</p>
             </motion.div>
           )}
 
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }} className="text-slate-500">
             <p className="text-[10px] uppercase tracking-[0.5em] mb-2">Scroll to Begin</p>
-            <div className="w-px h-12 bg-gradient-to-b from-bhai-gold to-transparent mx-auto"></div>
+            <div className={`w-px h-12 bg-gradient-to-b ${isSpecialDay ? 'from-bhai-red' : 'from-bhai-gold'} to-transparent mx-auto`}></div>
           </motion.div>
         </header>
 
@@ -331,21 +351,23 @@ function App() {
               whileInView={{ opacity: 1 }}
               className="text-center py-20 border-t border-white/5 mt-12"
             >
-              <p className="text-bhai-gold font-serif italic text-3xl md:text-5xl mb-6">Shubh Mastu</p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <p className={`${isSpecialDay ? 'text-bhai-red' : 'text-bhai-gold'} font-serif italic text-3xl md:text-5xl mb-6`}>Shubh Mastu</p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
                 <button 
                   onClick={() => setShowNamavali(true)} 
-                  className="w-full sm:w-auto px-8 py-4 bg-bhai-gold text-bhai-dark font-black rounded-full shadow-lg text-sm uppercase tracking-widest"
+                  className={`w-full sm:w-auto px-8 py-4 ${isSpecialDay ? 'bg-bhai-red' : 'bg-bhai-gold'} text-bhai-dark font-black rounded-full shadow-lg text-sm uppercase tracking-widest`}
                 >
                   Recite Names
                 </button>
                 <button 
                   onClick={() => setShowAshtaBhairav(true)} 
-                  className="w-full sm:w-auto px-8 py-4 border border-bhai-gold/30 text-bhai-gold font-black rounded-full hover:bg-bhai-gold/10 text-sm uppercase tracking-widest"
+                  className={`w-full sm:w-auto px-8 py-4 border ${isSpecialDay ? 'border-bhai-red/30 text-bhai-red hover:bg-bhai-red/10' : 'border-bhai-gold/30 text-bhai-gold hover:bg-bhai-gold/10'} font-black rounded-full text-sm uppercase tracking-widest`}
                 >
                   The Eight Forms
                 </button>
               </div>
+
+              <SankalpaWall userSankalpa={hasSetSankalpa ? sankalpa : undefined} />
             </motion.div>
           )}
         </main>

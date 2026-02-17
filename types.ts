@@ -1,3 +1,4 @@
+
 export enum InteractionType {
   NONE = 'NONE',
   LIGHT_LAMP = 'LIGHT_LAMP',
@@ -44,4 +45,11 @@ export interface AppState {
   sankalpaSet: boolean;
   sankalpaText: string;
   isFocusMode: boolean;
+}
+
+export interface TithiInfo {
+  name: string;
+  sanskrit: string;
+  significance: string;
+  isSpecial: boolean;
 }
