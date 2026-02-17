@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Users, Heart, X } from 'lucide-react';
 
@@ -10,6 +10,7 @@ interface SankalpaSpark {
   y: number;
   scale: number;
   duration: number;
+  isUser?: boolean;
 }
 
 const mockSankalpas = [
@@ -29,18 +30,29 @@ const mockSankalpas = [
 
 interface SankalpaWallProps {
   userSankalpa?: string;
+  globalSankalpas?: string[];
   onClose?: () => void;
   isOverlay?: boolean;
 }
 
-export const SankalpaWall: React.FC<SankalpaWallProps> = ({ userSankalpa, onClose, isOverlay = false }) => {
+export const SankalpaWall: React.FC<SankalpaWallProps> = ({ 
+  userSankalpa, 
+  globalSankalpas = [], 
+  onClose, 
+  isOverlay = false 
+}) => {
   const [sparks, setSparks] = useState<SankalpaSpark[]>([]);
 
+  // Memoize all available texts to avoid re-calculating
+  const allAvailableTexts = useMemo(() => {
+    return [...mockSankalpas, ...globalSankalpas];
+  }, [globalSankalpas]);
+
   useEffect(() => {
-    // Initialize with some sparks
-    const initialSparks = Array.from({ length: 12 }).map((_, i) => ({
+    // Initial sparks
+    const initialSparks = Array.from({ length: 15 }).map((_, i) => ({
       id: `init-${i}`,
-      text: mockSankalpas[Math.floor(Math.random() * mockSankalpas.length)],
+      text: allAvailableTexts[Math.floor(Math.random() * allAvailableTexts.length)],
       x: Math.random() * 80 + 10,
       y: Math.random() * 60 + 20,
       scale: Math.random() * 0.5 + 0.8,
@@ -48,21 +60,25 @@ export const SankalpaWall: React.FC<SankalpaWallProps> = ({ userSankalpa, onClos
     }));
     setSparks(initialSparks);
 
-    // Occasionally add new sparks to simulate real-time
+    // Continuous flow
     const interval = setInterval(() => {
+      const isFromUserList = globalSankalpas.length > 0 && Math.random() > 0.7;
+      const textPool = isFromUserList ? globalSankalpas : mockSankalpas;
+      
       const newSpark = {
         id: Math.random().toString(36).substr(2, 9),
-        text: mockSankalpas[Math.floor(Math.random() * mockSankalpas.length)],
+        text: textPool[Math.floor(Math.random() * textPool.length)],
         x: Math.random() * 80 + 10,
-        y: 100, // Start from bottom
+        y: 100,
         scale: Math.random() * 0.4 + 0.8,
-        duration: Math.random() * 15 + 20
+        duration: Math.random() * 15 + 20,
+        isUser: isFromUserList
       };
-      setSparks(prev => [...prev.slice(-20), newSpark]);
-    }, 4000);
+      setSparks(prev => [...prev.slice(-25), newSpark]);
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [allAvailableTexts, globalSankalpas]);
 
   const content = (
     <div className={`relative w-full ${isOverlay ? 'min-h-screen pt-24' : 'min-h-[60vh] rounded-[3rem]'} bg-slate-950/50 border border-white/5 overflow-hidden p-8 md:p-16`}>
@@ -90,7 +106,7 @@ export const SankalpaWall: React.FC<SankalpaWallProps> = ({ userSankalpa, onClos
         </div>
         <h2 className="text-3xl md:text-6xl font-serif font-bold text-white mb-4">The Global Wall of Grace</h2>
         <p className="text-slate-400 font-serif italic max-w-xl mx-auto text-sm md:text-lg">
-          Every spark represents a soul seeking the Guardian. You are not alone in your prayer.
+          {globalSankalpas.length + mockSankalpas.length} intentions lighting the path.
         </p>
       </div>
 
@@ -102,8 +118,8 @@ export const SankalpaWall: React.FC<SankalpaWallProps> = ({ userSankalpa, onClos
               initial={{ opacity: 0, y: 150, x: `${spark.x}%` }}
               animate={{ 
                 opacity: [0, 1, 1, 0], 
-                y: -300, 
-                x: `${spark.x + (Math.random() * 15 - 7.5)}%` 
+                y: -350, 
+                x: `${spark.x + (Math.random() * 20 - 10)}%` 
               }}
               exit={{ opacity: 0 }}
               transition={{ duration: spark.duration, ease: "linear" }}
@@ -111,10 +127,16 @@ export const SankalpaWall: React.FC<SankalpaWallProps> = ({ userSankalpa, onClos
               style={{ scale: spark.scale }}
             >
               <div className="flex flex-col items-center">
-                <div className="bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full shadow-[0_0_15px_rgba(251,191,36,0.05)]">
-                  <p className="text-white/70 font-serif italic text-xs md:text-sm whitespace-nowrap">"{spark.text}"</p>
+                <div className={`backdrop-blur-md border px-4 py-2 rounded-full shadow-lg ${
+                  spark.isUser 
+                    ? 'bg-bhai-red/10 border-bhai-red/30 text-white shadow-bhai-red/20' 
+                    : 'bg-white/5 border-white/10 text-white/70 shadow-black/50'
+                }`}>
+                  <p className="font-serif italic text-xs md:text-sm whitespace-nowrap">"{spark.text}"</p>
                 </div>
-                <div className="w-1.5 h-1.5 bg-bhai-gold/60 rounded-full mt-2 animate-pulse shadow-[0_0_8px_#fbbf24]"></div>
+                <div className={`w-1.5 h-1.5 rounded-full mt-2 animate-pulse ${
+                  spark.isUser ? 'bg-bhai-red shadow-[0_0_10px_#dc2626]' : 'bg-bhai-gold/60 shadow-[0_0_8px_#fbbf24]'
+                }`}></div>
               </div>
             </motion.div>
           ))}

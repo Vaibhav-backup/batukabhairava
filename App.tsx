@@ -10,8 +10,11 @@ import { MahakalBhairavStory } from './components/MahakalBhairavStory';
 import { AshtaBhairavaPage } from './components/AshtaBhairavaPage';
 import { BhairavaPanchang } from './components/BhairavaPanchang';
 import { SankalpaWall } from './components/SankalpaWall';
+import { supabase } from './lib/supabase';
 import { ArrowUp, Sparkles, ScrollText, ShieldCheck, MapPin, Feather, Compass, Clock, Coins, Shield, Menu, X as CloseIcon, Infinity as InfinityIcon, Users } from 'lucide-react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
+
+const STORAGE_KEY = 'bhairava_sankalpas';
 
 function App() {
   const [unlockedIndex, setUnlockedIndex] = useState(0);
@@ -24,6 +27,7 @@ function App() {
   const [showSankalpaWallOverlay, setShowSankalpaWallOverlay] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [sankalpa, setSankalpa] = useState('');
+  const [allSankalpas, setAllSankalpas] = useState<string[]>([]);
   const [isSankalpaModalOpen, setIsSankalpaModalOpen] = useState(true);
   const [hasSetSankalpa, setHasSetSankalpa] = useState(false);
   const [isSpecialDay, setIsSpecialDay] = useState(false);
@@ -39,9 +43,41 @@ function App() {
 
   const lightIntensity = (unlockedIndex / (storyData.length - 1)) * 100;
 
+  // Sync with Supabase
   useEffect(() => {
+    // 1. Initial Fetch
+    const fetchSankalpas = async () => {
+      const { data, error } = await supabase
+        .from('sankalpas')
+        .select('text')
+        .order('created_at', { ascending: false })
+        .limit(100);
+      
+      if (data && !error) {
+        setAllSankalpas(data.map(item => item.text));
+      } else {
+        // Fallback to local storage if network fails
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) setAllSankalpas(JSON.parse(saved));
+      }
+    };
+
+    fetchSankalpas();
+
+    // 2. Real-time Subscription
+    const channel = supabase
+      .channel('public:sankalpas')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'sankalpas' }, (payload) => {
+        setAllSankalpas(prev => [payload.new.text, ...prev].slice(0, 100));
+      })
+      .subscribe();
+
     const day = new Date().getDate();
     setIsSpecialDay(day % 10 === 8);
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   useEffect(() => {
@@ -52,11 +88,22 @@ function App() {
     }
   }, [unlockedIndex]);
 
-  const handleSankalpaSubmit = (e: React.FormEvent) => {
+  const handleSankalpaSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (sankalpa.trim()) {
+      // Optimistic update locally
+      const updated = [sankalpa, ...allSankalpas].slice(0, 100);
+      setAllSankalpas(updated);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       setHasSetSankalpa(true);
       setIsSankalpaModalOpen(false);
+
+      // Push to Supabase
+      const { error } = await supabase
+        .from('sankalpas')
+        .insert([{ text: sankalpa }]);
+        
+      if (error) console.error("Error saving sankalpa:", error);
     }
   };
 
@@ -197,7 +244,7 @@ function App() {
           </AnimatePresence>
         </div>
 
-        {/* Desktop Sidebar (Left) - Grouping Names, Temple, and Sankalpa */}
+        {/* Desktop Sidebar (Left) */}
         <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col space-y-2">
           <motion.div className="mb-4 px-4 w-60 translate-x-[-100%] hover:translate-x-0 transition-transform duration-500 bg-slate-900/60 backdrop-blur-2xl border border-white/10 rounded-r-3xl p-4">
              <BhairavaPanchang />
@@ -306,6 +353,7 @@ function App() {
             <SankalpaWall 
               isOverlay 
               userSankalpa={hasSetSankalpa ? sankalpa : undefined} 
+              globalSankalpas={allSankalpas}
               onClose={() => setShowSankalpaWallOverlay(false)} 
             />
           )}
@@ -386,7 +434,10 @@ function App() {
                 </button>
               </div>
 
-              <SankalpaWall userSankalpa={hasSetSankalpa ? sankalpa : undefined} />
+              <SankalpaWall 
+                userSankalpa={hasSetSankalpa ? sankalpa : undefined} 
+                globalSankalpas={allSankalpas} 
+              />
             </motion.div>
           )}
         </main>
